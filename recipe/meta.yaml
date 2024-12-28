@@ -6,23 +6,25 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/dash_iconify-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/dash_iconify-{{ version }}.tar.gz
   sha256: 564774be6b11b0ac3a8999b7137c3d17a1d351d69b673aa313c7228eacc9d143
 
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.7
+    - python {{ python_min }}
     - pip
   run:
-    - python >=3.7
+    - python >={{ python_min }}
     - dash
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - dash_iconify
   # pip checks for dash are broken (https://github.com/conda-forge/dash-mantine-components-feedstock/pull/9#discussion_r1466183308)
